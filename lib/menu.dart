@@ -5,9 +5,9 @@ class MyHomePage extends StatelessWidget {
   final String name = 'Joshua Montolalu'; // Nama
   final String className = 'PBP F'; // Kelas
   final List<ItemHomepage> items = [
-    ItemHomepage("Lihat Daftar Produk", Icons.view_list),
-    ItemHomepage("Tambah Produk", Icons.add),
-    ItemHomepage("Logout", Icons.logout),
+    ItemHomepage("Lihat Daftar Produk", Icons.view_list, Colors.lightBlue),
+    ItemHomepage("Tambah Produk", Icons.add, Colors.green),
+    ItemHomepage("Logout", Icons.logout, Colors.red),
   ];
   
   MyHomePage({super.key});
@@ -108,7 +108,7 @@ class MyHomePage extends StatelessWidget {
         child: Container(
           // Mengatur ukuran dan jarak di dalam kartu.
           width: MediaQuery.of(context).size.width / 3.5, // menyesuaikan dengan lebar device yang digunakan.
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(10.0),
           // Menyusun title dan content secara vertikal.
           child: Column(
             children: [
@@ -128,8 +128,9 @@ class MyHomePage extends StatelessWidget {
 class ItemHomepage {
     final String name;
     final IconData icon;
+    final Color color;
 
-    ItemHomepage(this.name, this.icon);
+    ItemHomepage(this.name, this.icon, this.color);
 }
 
 class ItemCard extends StatelessWidget {
@@ -143,7 +144,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       // Menentukan warna latar belakang dari tema aplikasi.
-      color: Theme.of(context).colorScheme.secondary,
+      color: item.color,
       // Membuat sudut kartu melengkung.
       borderRadius: BorderRadius.circular(12),
       
