@@ -6,8 +6,31 @@
 Versi mobile dari aplikasi web [Jokes Come True](https://github.com/HamletJr/jokes-come-true) menggunakan Flutter.
 
 ### Tugas Sebelumnya
-| [Tugas 7](#7️⃣-tugas-7) |
-| - |
+| [Tugas 7](#7️⃣-tugas-7) | [Tugas 8](#8️⃣-tugas-8) |
+| - | - |
+
+## 8️⃣ Tugas 8
+### 1. Apa kegunaan `const` di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?
+TBD
+
+### 2. Jelaskan dan bandingkan penggunaan *Column* dan *Row* pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+TBD
+
+### 3. Sebutkan apa saja elemen input yang kamu gunakan pada halaman *form* yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+TBD
+
+### 4. Bagaimana cara kamu mengatur tema (*theme*) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+TBD
+
+### 5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+TBD
+
+🕛 **Terakhir di-*update*:** 6 November 2024
+
+## 📜 Log Riwayat README
+
+<details>
+<summary><b>Tugas 7 (6/11/2024)</b></summary>
 
 ## 7️⃣ Tugas 7
 ### 1. Jelaskan apa yang dimaksud dengan *stateless widget* dan *stateful widget*, dan jelaskan perbedaan dari keduanya.
@@ -73,11 +96,4 @@ Selain kedua contoh di atas, ada juga beberapa perbedaan lain antara `const` dan
 8. Saya membuat repositori baru di GitHub dan melakukan *add-commit-push*.
 
 🕛 **Terakhir di-*update*:** 5 November 2024
-
-## 📜 Log Riwayat README
-N/A
-<!--
-<details>
-<summary><b>Judul</b></summary>
 </details>
--->
