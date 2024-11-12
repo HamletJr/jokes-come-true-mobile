@@ -11,19 +11,77 @@ Versi mobile dari aplikasi web [Jokes Come True](https://github.com/HamletJr/jok
 
 ## 8️⃣ Tugas 8
 ### 1. Apa kegunaan `const` di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?
-TBD
+Seperti yang pernah disebut sebelumnya, `const` dalam Flutter berguna untuk menetapkan sebuah *compile-time constant*, atau konstanta yang diketahui saat di-*compile*. Ini berguna ketika kita ingin memberitahu Flutter bahwa suatu variabel tidak akan berubah nilainya selama berjalannya program kita. Misalnya, pada `menu.dart`, digunakan *widget* `Text` untuk judul `AppBar` yang didefinisikan sebagai berikut:
+```Dart
+return Scaffold(
+    appBar: AppBar(
+    title: const Text(
+        'Jokes Come True',
+        style: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        ),
+    ),
+    ...
+    ),
+)
+```
+Pada contoh di atas, diberi modifier `const` pada `Text` sehingga *property* `title` pada `AppBar` akan selalu merupakan sebuah *widget* `Text`. Tidak hanya itu, `const` menjamin bahwa isi variabel tersebut (*property*-nya) tidak akan berubah juga selama berjalannya aplikasi. Ini berarti isi *widget* `Text` juga tidak akan berubah, baik itu teksnya, *style*-nya, *color*-nya, dan semua *property* lainnya. Keuntungan menggunakan `const` dalam Flutter adalah Flutter tidak perlu melakukan *render* atau *build* ulang terhadap *widget* tersebut karena pasti tidak berubah. Selain itu, `const` juga mencegah kita dan developer lain untuk mengubah tanpa sengaja *widget* atau variabel yang seharusnya tidak berubah. `const` sebaiknya digunakan untuk *widget-widget* dan variabel-variabel yang **tidak diharapkan untuk berubah nilai-nya, khususnya saat di-*compile***. Seperti contoh di atas, judul dari aplikasi saya seharusnya tetap *Jokes Come True* selama berjalannya aplikasi, sehingga diberi modifier `const`. Sebaliknya, `const` tidak dapat digunakan untuk variabel yang tidak diketahui nilainya saat di-*compile* (gunakan `final` untuk *run-time constant*) atau variabel yang akan berubah terus, seperti *counter* pada demo Flutter.
 
 ### 2. Jelaskan dan bandingkan penggunaan *Column* dan *Row* pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
-TBD
+*Widget* `Column` digunakan untuk menyusun *widget* lain secara vertikal, sedangkan `Row` digunakan untuk menyusun elemen secara horizontal. Masing-masing elemen memiliki `mainAxisAlignment` (yang mengatur penempatan sejajar dengan arah masing-masing) dan `crossAxisAlignment` (yang mengatur penempatan secara tegak lurus dengan arah masing-masing).
+
+Untuk contoh implementasinya ada dalam `menu.dart`, yaitu:
+```Dart
+child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+        Row(                            // Elemen kolom ke-1
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            InfoCard(title: 'NPM', content: npm),           // Elemen row ke-1
+            InfoCard(title: 'Name', content: name),         // Elemen row ke-2
+            InfoCard(title: 'Class', content: className),   // Elemen row ke-3
+            ],
+        ),
+        const SizedBox(height: 16.0),   // Elemen kolom ke-2
+        Center(                         // Elemen kolom ke-3
+            child: Column(
+                ...     // Elemen-elemen lain dalam kolom
+            )
+        )
+        ]
+    )
+```
+Dapat dilihat bahwa kedua widget tersebut dapat digunakan secara bersamaan dan di-*nesting* untuk penataan *widget* yang lebih tepat dan akurat. Terdapat `Column` pada level paling luar untuk menyimpan semua *widget* lain, kemudian disusun 3 *widget* di dalamnya secara vertikal, yaitu `Row`, `SizedBox`, dan `Center`. `Row` pun menyusun *widget* lain secara horizontal di dalamnya, yaitu `InfoCard`. Kemudian, ada `SizedBox` sebagai elemen ke-2 dan terakhir ada `Center` yang akan menempatkan *child widget*-nya di tengah. Dan ternyata ia menyimpan sebuah *widget* `Column` lain! Jadi widget `Row` dan `Column` dapat digunakan bersamaan untuk menata *widget* dalam Flutter.
 
 ### 3. Sebutkan apa saja elemen input yang kamu gunakan pada halaman *form* yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
-TBD
+Pada tugas ini, saya hanya menggunakan elemen input `TextArea` untuk menerima input teks. Namun, elemen input Flutter tidak hanya terbatas pada `TextArea`, tetapi ada banyak elemen input lain yang dapat digunakan antara lain: 
+- `Radio`: Untuk menerima satu input saja dari beberapa pilihan tertentu.
+- `Slider`: Untuk menerima input dalam batasan tertentu.
+- `DatePicker`: Untuk menerima input tanggal.
+- `TimePicker`: Untuk menerima input waktu.
+- `Switch`: Untuk menyediakan beberapa parameter yang dapat "dinyalakan" atau "dimatikan".
+- `Checkbox`: Mirip dengan `Switch`, menyediakan beberapa parameter yang dapat di-*toggle*.
+- ...dan masih banyak lagi.
 
 ### 4. Bagaimana cara kamu mengatur tema (*theme*) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
-TBD
+Untuk mengatur tema dalam aplikasi Flutter, Flutter menyediakan class `ThemeData` yang dapat didefinisikan dalam *widget* `MaterialApp`. Flutter akan menyimpan dan menggunakan definisi tema yang kita tentukan di sini, seperti warna dan font, sebagai default ketika kita tidak mendefinisikan tema khusus untuk *widget* dalam aplikasi kita. Sebaiknya *default theme* yang kita definisikan menggunakan `ThemeData` ini digunakan jika tidak ada keperluan *styling* khusus agar tema visual aplikasi kita tetap terjaga dan konsisten. Pada aplikasi saya, saya mendefinisikan tema warna dari aplikasi saya sebagai warna biru dalam `main.dart`. 
+```Dart
+theme: ThemeData(
+    colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.lightBlue,
+    ).copyWith(secondary: Colors.lightBlue[400]),
+),
+```
+Ini pun digunakan dalam *widget-widget* lain dalam aplikasi saya seperti pada `AppBar` dan `Drawer` menggunakan baris berikut:
+```Dart
+color: Theme.of(context).colorScheme.primary
+```
+Dengan demikian, widget-widget pada aplikasi saya tetap konsisten dan mengikuti warna yang ditetapkan dalam `main.dart`, bahkan jika saya misalnya ingin mengubah temanya ke warna hijau di kemudian hari.
 
 ### 5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
-TBD
+Untuk menangani navigasi dengan banyak halaman pada Flutter, kita dapat menggunakan *widget* yang menyimpan halaman-halaman tersebut, contohnya adalah `Drawer` yang digunakan dalam tugas ini. `Drawer` ini akan menyimpan halaman-halaman yang dapat dikunjungi, dan untuk menangani navigasi antar halaman sendiri, kita dapat menggunakan class `Navigator`. Ada beberapa method yang disediakan untuk navigasi, seperti `Navigator.push()` untuk *push route* baru ke atas *stack* (halaman yang ditampilkan dalam aplikasi otomatis merupakan *route* yang paling atas pada *stack*), `Navigator.pop()` untuk *pop* route teratas dan kembali ke route sebelumnya (jika ada), dan `Navigator.pushReplacement()`, yang akan *push* dan menggantikan *route* yang sekarang. `Navigator` juga menyediakan method lain seperti `Navigator.popUntil()`, `Navigator.pushNamed()`, dan `Navigator.pushNamedAndRemoveUntil()` yang dapat digunakan untuk meningkatkan UX dari aplikasi kita. 
 
 🕛 **Terakhir di-*update*:** 6 November 2024
 
