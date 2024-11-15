@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jokes_come_true/screens/menu.dart';
-import 'package:jokes_come_true/screens/productentry_form.dart';
+import 'package:jokes_come_true/screens/product_form.dart';
+import 'package:jokes_come_true/screens/product_list.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -37,30 +38,41 @@ class LeftDrawer extends StatelessWidget {
             ],
           ),
           ),
-            ListTile(
-              leading: const Icon(Icons.home_outlined),
-              title: const Text('Main Menu'),
-              // Bagian redirection ke MyHomePage
-              onTap: () {
-                Navigator.pushReplacement(
+          ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Main Menu'),
+            // Bagian redirection ke MyHomePage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add),
+            title: const Text('Add Product'),
+            // Bagian redirection ke MoodEntryFormPage
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductFormPage(),
+                ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_bag_sharp),
+            title: const Text('All Products'),
+            onTap: () {
+                // Route menu ke halaman mood
+                Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => MyHomePage(),
-                    ));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.add),
-              title: const Text('Add Product'),
-              // Bagian redirection ke MoodEntryFormPage
-              onTap: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProductEntryFormPage(),
-                    ));
-              },
-            ),
+                    MaterialPageRoute(builder: (context) => const ProductPage()),
+                );
+            },
+          ),
         ],
       ),
     );

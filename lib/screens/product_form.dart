@@ -1,15 +1,18 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:jokes_come_true/screens/menu.dart';
 import 'package:jokes_come_true/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-class ProductEntryFormPage extends StatefulWidget {
-  const ProductEntryFormPage({super.key});
+class ProductFormPage extends StatefulWidget {
+  const ProductFormPage({super.key});
 
   @override
-  State<ProductEntryFormPage> createState() => _ProductEntryFormPageState();
+  State<ProductFormPage> createState() => _ProductFormPageState();
 }
 
-class _ProductEntryFormPageState extends State<ProductEntryFormPage> {
+class _ProductFormPageState extends State<ProductFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _name = "";
 	String _description = "";
@@ -18,11 +21,14 @@ class _ProductEntryFormPageState extends State<ProductEntryFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Add a Product',
+        title: Text(
+          'Add a Product',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -147,49 +153,37 @@ class _ProductEntryFormPageState extends State<ProductEntryFormPage> {
                       padding: WidgetStateProperty.all(
                           const EdgeInsets.symmetric(vertical: 20.0, horizontal: 32.0)),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Product saved successfully'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Product name: $_name'),
-                                    Text('Description: $_description'),
-                                    Text('Price: $_price Jade Feathers'),
-                                    Text('Quantity: $_quantity'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('Main Menu'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MyHomePage(),
-                                      ),
-                                    );
-                                    _formKey.currentState!.reset();
-                                  },
-                                ),
-                                TextButton(
-                                  child: const Text('Add Another Product'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    _formKey.currentState!.reset();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                        // Kirim ke Django dan tunggu respons
+                        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                        final response = await request.postJson(
+                          "http://127.0.0.1:8000/create-flutter/",
+                          jsonEncode(<String, String>{
+                            'name': _name,
+                            'description': _description,
+                            'price': _price.toString(),
+                            'quantity': _quantity.toString(),
+                          }),
                         );
+                        if (context.mounted) {
+                          if (response['status'] == 'success') {
+                            ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                content: Text("Your product has been saved!"),
+                              ));
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => MyHomePage()),
+                              );
+                          } else {
+                            ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                content:
+                                  Text("An error occured, please try again."),
+                              ));
+                          }
+                        }
                       }
                     },
                     child: const Text(
