@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:jokes_come_true/models/product.dart';
 import 'package:jokes_come_true/widgets/left_drawer.dart';
@@ -52,15 +53,25 @@ class _ProductPageState extends State<ProductPage> {
           if (snapshot.data == null) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            if (!snapshot.hasData) {
-              return const Column(
-                children: [
-                  Text(
-                    'Sorry, no products available yet!',
-                    style: TextStyle(fontSize: 20, color: Color(0xff59A5D8)),
-                  ),
-                  SizedBox(height: 8),
-                ],
+            if (snapshot.data.length == 0) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/sad_image.png'),
+                      width: min(MediaQuery.of(context).size.width * 0.4, 150),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Sorry, no products are available yet!',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else {
               return ListView.builder(
@@ -96,11 +107,15 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          Text("${snapshot.data![index].fields.price} Jade Feathers"),
+                          Row(
+                            children: [
+                              Image.asset('assets/images/jade_feather.png', width: 20),
+                              const SizedBox(width: 5),
+                              Text("${snapshot.data![index].fields.price} Jade Feathers"),
+                            ],
+                          ),
                           const SizedBox(height: 10),
-                          Text("Description: ${snapshot.data![index].fields.description.toString().trim()}"),
-                          const SizedBox(height: 10),
-                          Text("Qty: ${snapshot.data![index].fields.quantity}")
+                          Text(snapshot.data![index].fields.description.toString().trim()),
                         ],
                       )
                     ),
