@@ -55,6 +55,7 @@ Terakhir, mekanisme untuk melakukan logout adalah sebagai berikut:
 9. Saya menambahkan file baru dalam direktori `/screens` yaitu `product_details.dart`. *Screen* ini akan ditampilkan jika pengguna ingin melihat detail suatu produk lebih lanjut, dan berisi informasi produk lengkap seperti nama, deskripsi, harga, dan kuantitas. Halaman ini dihubungkan ke setiap elemen list pada *screen* `product_list.dart`.
 10. Sebagai tambahan, saya juga menambahkan endpoint untuk menghapus produk pada proyek Django, dan menambahkannya ke *screen* `product_details.dart` yang ditambahkan sebelumnya untuk memungkinkan penghapusan produk dari dalam Flutter.
 
+🕛 **Terakhir di-*update*:** 19 November 2024
 
 ## 📜 Log Riwayat README
 
